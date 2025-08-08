@@ -15,11 +15,11 @@ A simple and type-safe internationalization (i18n) library for TypeScript projec
 Install the package using your favorite package manager:
 
 ```bash
-npm install typescript-i18n-pure
+npm install typescript-i18n
 # or
-yarn add typescript-i18n-pure
+yarn add typescript-i18n
 # or
-pnpm add typescript-i18n-pure
+pnpm add typescript-i18n
 ```
 
 ## Getting Started
@@ -52,7 +52,7 @@ pnpm add typescript-i18n-pure
 
     `i18n.ts`
     ```typescript
-    import { TypescriptI18n } from "typescript-i18n-pure";
+    import { TypescriptI18n } from "typescript-i18n";
     import { en } from "./en";
     import { es } from "./es";
 
@@ -179,7 +179,7 @@ export const es = {
 
 `i18n.ts`
 ```typescript
-import { TypescriptI18n } from "typescript-i18n-pure";
+import { TypescriptI18n } from "typescript-i18n";
 import { en } from "./en";
 import { es } from "./es";
 
