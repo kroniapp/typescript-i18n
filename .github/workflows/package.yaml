@@ -13,7 +13,7 @@ jobs:
       contents: write
       packages: write
     env:
-      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Configure Git
         run: |
