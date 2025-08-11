@@ -13,7 +13,7 @@ jobs:
       contents: write
       packages: write
     env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Configure Git
         run: |
@@ -23,68 +23,54 @@ jobs:
           git config --get user.email
 
       - name: Setup checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v2.4.0
+      - name: Set up Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          version: 8
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          registry-url: "https://registry.npmjs.org"
-
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        with:
-          path: |
-            node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node
+          bun-version: latest
 
       - name: Setup env
         run: |
           tag=$GITHUB_REF_NAME
           version=$(echo $tag | sed -r "s/^v(.*)$/\1/")
           prerelease=false
-
           if [[ $tag == *"-next"* ]]; then
             prerelease=true
           fi
-
           git fetch --depth=1 origin +refs/tags/*:refs/tags/*
           message=$(git tag -l --format='%(contents:subject)' ${GITHUB_REF#refs/tags/})
-
           if [[ $prerelease == "true" ]]; then
-            npm_tag=next
+            branch=develop
+            tag=next
           else
-            npm_tag=latest
+            branch=master
+            tag=latest
           fi
 
           echo "prerelease=$prerelease" >> $GITHUB_ENV
           echo "version=$version" >> $GITHUB_ENV
           echo "message=$message" >> $GITHUB_ENV
-          echo "npm_tag=$npm_tag" >> $GITHUB_ENV
+          echo "branch=$branch" >> $GITHUB_ENV
+          echo "tag=$tag" >> $GITHUB_ENV
 
           echo "Prerelease: $prerelease"
           echo "Version: $version"
           echo "Message: $message"
-          echo "NPM tag: $npm_tag"
+          echo "Branch: $branch"
+          echo "Tag: $tag"
 
       - name: Install
-        run: pnpm i
+        run: bun i
 
       - name: Build
-        run: pnpm run build
+        run: bun run build
 
       - name: Publish
-        run: pnpm publish --tag ${{env.npm_tag}} --no-git-checks
+        run: bun publish --tag ${{env.tag}}
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{env.version}}
           name: v${{env.version}}

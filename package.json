@@ -1,7 +1,7 @@
 {
   "name": "typescript-i18n",
-  "version": "0.3.0",
-  "description": "",
+  "version": "0.3.2",
+  "description": "Internationalization library working in Node.JS and browser",
   "keywords": [
     "i18n",
     "internationalization",
@@ -34,9 +34,9 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "pkgroll": "^2.0.1",
-    "tsx": "^4.7.1",
-    "typescript": "^5.3.3"
+    "pkgroll": "^2.15.3",
+    "tsx": "^4.20.3",
+    "typescript": "^5.9.2"
   },
   "exports": {
     ".": {
