@@ -1,7 +1,7 @@
 {
   "name": "typescript-i18n",
-  "version": "0.3.2",
-  "description": "Internationalization library working in Node.JS and browser",
+  "version": "0.3.3",
+  "description": "A simple and type-safe internationalization (i18n) library for TypeScript projects",
   "keywords": [
     "i18n",
     "internationalization",
